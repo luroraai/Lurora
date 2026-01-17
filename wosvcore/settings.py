@@ -190,89 +190,22 @@ UNFOLD = {
     "SITE_TITLE": "Lurora",
     "SITE_HEADER": "Lurora Admin",
     "SITE_URL": "/",
-    "SITE_ICON": None,
-    "SITE_LOGO": None,
-```
-    "SITE_SYMBOL": "speed",  # symbol from icon set
-
-    "SHOW_HISTORY": True,  # show/hide "History" button, default: True
-    "SHOW_VIEW_ON_SITE": True,  # show/hide "View on site" button, default: True
-    # "ENVIRONMENT": "sample_app.environment_callback",
-    # "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
-    "THEME": "light",  # Force theme: "dark" or "light". Will disable theme switcher
-    # "LOGIN": {
-    "image": lambda request: static("../static/common/img/auth-bg-1.jpg"),
-    #     "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
-    # },
+    "SITE_SYMBOL": "speed",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+    "THEME": "light",
     "STYLES": [
         lambda request: static("common/css/style.css"),
     ],
     "SCRIPTS": [
         lambda request: static("common/js/script.js"),
     ],
-    # "COLORS": {
-    #     "primary": {
-    #         "50": "250 245 255",
-    #         "100": "243 232 255",
-    #         "200": "233 213 255",
-    #         "300": "216 180 254",
-    #         "400": "192 132 252",
-    #         "500": "168 85 247",
-    #         "600": "147 51 234",
-    #         "700": "126 34 206",
-    #         "800": "107 33 168",
-    #         "900": "88 28 135",
-    #         "950": "59 7 100",
-    #     },
-    # },
-    # "EXTENSIONS": {
-    #     "modeltranslation": {
-    #         "flags": {
-    #             "en": "🇬🇧",
-    #             "fr": "🇫🇷",
-    #             "nl": "🇧🇪",
-    #         },
-    #     },
-    # },
     "SIDEBAR": {
-        "show_search": True,  # Search in applications and models names
-        "show_all_applications": True,  # Dropdown with all applications and models
-        "show_all_models": True,  # Dropdown with all applications and models
-        "show_application_groups": True,  # Dropdown with all application groups
-        # "navigation": [
-        #     {
-        #         "title": _("Dashboard"),
-        #         "separator": True,  # Top border
-        #         "items": [
-        #             {
-        #                 "title": _("Başlangıç"),
-        #                 "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
-        #                 "link": reverse_lazy("admin:index"),
-        #                 "permission": lambda request: request.user.is_superuser,
-        #             },
-        #         ],
-        #     },
-        #     {
-        #         "title": _('Configurations'),
-        #         "seperator": True,
-        #         "items": [
-        #             {
-        #                 "title": _("Paketler"),
-        #                 "icon": "people",
-        #                 "link": reverse_lazy("admin:core_packages_changelist"),
-        #
-        #             },
-        #             {
-        #                 "title": _("Paket Oluştur"),
-        #                 "icon": "people",
-        #                 "link": reverse_lazy("admin:core_packages_add"),
-        #
-        #             },
-        #         ]
-        #     },
-        # ]
+        "show_search": True,
+        "show_all_applications": True,
+        "show_all_models": True,
+        "show_application_groups": True,
     },
-
 }
 
 GEMINI_API_KEY = ''
