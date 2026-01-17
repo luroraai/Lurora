@@ -1,0 +1,22 @@
+{% extends "layouts/dashboard.html" %}
+{% load static crispy_forms_filters %}
+{% block content %}
+    <div class="content">
+        <h1>Wosvo Interactive | </h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+
+
+            <div class="text-center mt-5">
+                <!--begin::Submit button-->
+                <button type="submit" id="submitBtn"
+                        class="btn btn-lg btn-primary w-100 mb-5">
+                    <span class="indicator-label">Kaydet</span>
+                </button>
+                <!--end::Submit button-->
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+

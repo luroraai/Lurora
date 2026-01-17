@@ -1,0 +1,87 @@
+{% extends "layouts/base.html" %}
+{% load static crispy_forms_tags %}
+{% block content %}
+    <!-- ===========================
+   =========>> Register <<====== -->
+    <div class="login-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="login-content-box">
+                        <div class="row row-gap-4">
+                            <div class="col-lg-6 align-self-center">
+                                <div class="login-img-box me-lg-5">
+                                    <div class="login-img">
+                                        <figure class="image-effect right-reveal">
+                                            <img src="{% get_static_prefix %}frontend/images/call-to-action/1.jpg" alt="action images"
+                                                 class="img-fluid w-100">
+                                        </figure>
+                                        <figure class="image-effect left-reveal">
+                                            <img src="{% get_static_prefix %}frontend/images/call-to-action/2.jpg" alt="action images"
+                                                 class="img-fluid w-100">
+                                        </figure>
+                                    </div>
+                                    <div class="text-center mt-4">
+                                        <span>Create an Account</span>
+                                        <h3>Welcome To Lurora</h3>
+                                        <a href="/" class="btn btn--black btn--border">
+                                            Back To Home
+                                            <i class="flaticon-right-arrow"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 align-self-center">
+                                {% include 'partials/_messages.html' %}
+                                <form novalidate="novalidate" method="post" action="">
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    {#                                    <div class="d-flex flex-wrap row-gap-4 justify-content-between">#}
+                                    {##}
+                                    {#                                        <a href="" class="forgot-text">Forgot Password?</a>#}
+                                    {#                                    </div>#}
+                                    <div class="submit-button">
+                                        <button type="submit" class="btn btn--base">
+                                            Sign In
+                                            <i class="flaticon-right-arrow"></i>
+                                        </button>
+                                    </div>
+                                    <div class="or-form">
+                                        <span>Or Continue With:</span>
+                                    </div>
+                                    <div class="other-sing text-center">
+                                        <button class="w-full">
+                                            <svg width="24" height="24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                        d="M22.5 12.233c0-.863-.07-1.493-.226-2.147h-10.06v3.897h5.906c-.12.968-.762 2.427-2.19 3.407l-.02.13 3.18 2.415.22.021c2.024-1.831 3.19-4.526 3.19-7.723Z"
+                                                        fill="#4285F4"></path>
+                                                <path
+                                                        d="M12.214 22.5c2.893 0 5.321-.933 7.095-2.543l-3.38-2.567c-.905.618-2.12 1.05-3.715 1.05a6.438 6.438 0 0 1-6.095-4.363l-.126.01-3.307 2.508-.043.118c1.761 3.43 5.38 5.787 9.571 5.787Z"
+                                                        fill="#34A853"></path>
+                                                <path
+                                                        d="M6.12 14.077A6.348 6.348 0 0 1 5.765 12c0-.723.13-1.423.345-2.077l-.006-.139-3.349-2.548-.11.05A10.339 10.339 0 0 0 1.503 12c0 1.692.417 3.29 1.143 4.713l3.476-2.636Z"
+                                                        fill="#FBBC05"></path>
+                                                <path
+                                                        d="M12.214 5.56c2.012 0 3.369.852 4.143 1.563L19.38 4.23c-1.857-1.692-4.274-2.73-7.167-2.73-4.19 0-7.81 2.357-9.571 5.787l3.464 2.636a6.465 6.465 0 0 1 6.107-4.363Z"
+                                                        fill="#EB4335"></path>
+                                            </svg>
+                                            <span>Google</span>
+                                        </button>
+
+                                    </div>
+                                    <p class="text-center">Already have an account? <a
+                                            href="{% url 'accounts:login' %}">Login</a>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =====>> End Login <<=====
+    =============================== -->
+{% endblock content %}
+

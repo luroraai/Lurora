@@ -1,0 +1,56 @@
+{% load static %}
+<!--begin::Menu-->
+<div class="card card-body shadow-sm rounded">
+
+    <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6">
+        <!--begin::Date-->
+        <span class="fs-6 text-gray-500 fw-bold">{{ user.email }}</span>
+        <!--end::Date-->
+
+        <!--begin::Label-->
+        <div class="fs-4 fw-bold text-success">{{ user.first_name }} {{ user.last_name }}</div>
+        <!--end::Label-->
+    </div>
+    <div class="menu menu-rounded menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-5 fw-semibold "
+         id="#kt_aside_menu" data-kt-menu="true">
+        <div class="menu-item">
+            <div class="menu-content pb-2">
+                <span class="menu-section text-muted text-uppercase fs-7 fw-bold">MENU</span>
+            </div>
+        </div>
+        <div class="menu-item">
+            <a href="{% url 'accounts:dashboard' %}"
+               class="menu-link {% if '/accounts' == request.path %} active border-3 border-start border-primary {% endif %} ">
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="{% url 'accounts:stories:index' %}"
+               class="menu-link {% if '/stories' == request.path %} active border-3 border-start border-primary{% endif %} ">
+                <span class="menu-title">Story List</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="{% url 'accounts:stories:create' %}"
+               class="menu-link {% if '/stories/create' == request.path %} active border-3 border-start border-primary{% endif %}  ">
+                <span class="menu-title">New Story</span>
+            </a>
+        </div>
+
+        <div class="menu-item">
+            <a href="{% url 'accounts:profile' %}"
+               class="menu-link {% if '/accounts/profile' == request.path %} active border-3 border-start border-primary{% endif %}">
+                <span class="menu-title">Account </span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="{% url 'accounts:change_password' %}"
+               class="menu-link border-3">
+                <span class="menu-title">Update Password </span>
+            </a>
+        </div>
+    </div>
+    <a class="btn btn-light btn-block" href="{% url 'accounts:logout' %}"> <i class="fa fa-power-off"></i> <span
+            class="text">Log out</span> </a>
+</div>
+<!--end::Menu-->

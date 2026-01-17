@@ -1,0 +1,191 @@
+/*
+ * Author : Wosvo Interactive
+ * Developer : Fürkan Göktaş
+ * Email : furkan@wosvo.com
+ * Date : 8.04.2025 23:22
+ * Filename : custom.css
+ * Last Modified : 8.04.2025 23:22
+ * Project : backend
+ * Module : backend
+ *
+ * Copyright (c) 2025
+ */
+
+.overlay {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #222;
+}
+
+.overlay__inner {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.overlay__content {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner {
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.05);
+    border-top-color: #fff;
+    animation: spin 1s infinite linear;
+    border-radius: 100%;
+    border-style: solid;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.form-section form {
+    display: -ms-grid;
+    display: grid;
+    gap: 10px;
+}
+
+.form-section form .form-control {
+    background: none;
+    border: 1px solid hsl(var(--white)/0.1);
+    border-radius: 10px;
+    padding: 19px 15px;
+    color: hsl(var(--white));
+}
+
+@media screen and (max-width: 424px) {
+    .form-section form .form-control {
+        padding: 8px;
+    }
+}
+
+.form-section form .form-control::-webkit-input-placeholder {
+    color: hsl(var(--gray));
+}
+
+.form-section form .form-control::-moz-placeholder {
+    color: hsl(var(--gray));
+}
+
+.form-section form .form-control:-ms-input-placeholder {
+    color: hsl(var(--gray));
+}
+
+.form-section form .form-control::-ms-input-placeholder {
+    color: hsl(var(--gray));
+}
+
+.form-section form .form-control::placeholder {
+    color: hsl(var(--gray));
+}
+
+.form-section form .form-check label {
+    cursor: pointer;
+}
+
+.form-section form .forgot-text {
+    color: hsl(var(--gray));
+}
+
+.form-section form .submit-button .btn {
+    width: 100%;
+}
+
+.form-section form .or-form {
+    text-align: center;
+    position: relative;
+}
+
+.form-section form .or-form::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 100%;
+    height: 1px;
+    background: hsl(var(--gray)/0.2);
+    z-index: -1;
+}
+
+.form-section form .or-form span {
+    font-weight: 600;
+    background: hsl(var(--black-six));
+    display: inline-block;
+    padding: 0 30px;
+}
+
+.form-section form .other-sing {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 24px 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.form-section form .other-sing button {
+    background: hsl(var(--gray)/0.2);
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: hsl(var(--white)/0.7);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 10px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+@media screen and (max-width: 1199px) {
+    .form-section form .other-sing button {
+        font-size: 1.125rem;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .form-section form .other-sing button {
+        font-size: 1rem;
+    }
+}
+
+.form-section form .other-sing button:hover {
+    background: hsl(var(--gray)/0.5);
+}
+
+.form-section form p a {
+    color: hsl(var(--white));
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.form-section form .form-check-input {
+    background-color: unset;
+    background-color: unset;
+    border: 1px solid hsl(var(--border-color)/0.7);
+}

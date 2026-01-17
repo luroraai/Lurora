@@ -1,0 +1,302 @@
+{% extends "layouts/dashboard.html" %}
+{% load static %}
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ story.title }}</h1>
+        <p>Konu: {{ story.topic }}</p>
+        <p>Durum: {{ story.get_status_display }}</p>
+        {% include 'partials/_messages.html' %}
+        {% for scene in scenes %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>{{ scene.title }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Görsel düzenleme alanı -->
+                        <div class="image-editor" id="editor-{{ scene.id }}">
+                            <div class="canvas-container position-relative">
+                                <canvas id="canvas-{{ scene.id }}" width="500" height="400"
+                                        class="img-fluid border"></canvas>
+                            </div>
+
+                            <div class="mt-3">
+                                <div class="form-group">
+                                    <label for="watermark-code-{{ scene.id }}">Filigran Kodu:</label>
+                                    <input type="text" class="form-control watermark-code"
+                                           id="watermark-code-{{ scene.id }}"
+                                           data-scene-id="{{ scene.id }}"
+                                           placeholder="Kod girin">
+                                </div>
+
+                                <div class="mt-2">
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary apply-btn" data-scene-id="{{ scene.id }}">
+                                            Filigranı Uygula
+                                        </button>
+                                        <button class="btn btn-success save-btn" data-scene-id="{{ scene.id }}">
+                                            Görseli Kaydet
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group mt-2">
+                                        <label for="font-size-{{ scene.id }}">Yazı Boyutu:</label>
+                                        <input type="range" class="form-control-range"
+                                               id="font-size-{{ scene.id }}" min="8" max="36" value="16">
+                                    </div>
+
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox"
+                                               id="transparent-{{ scene.id }}">
+                                        <label class="form-check-label" for="transparent-{{ scene.id }}">
+                                            Yarı Saydam
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function generateImage(sceneId, sendUrl) {
+            const spinner = document.getElementById(`spinner-${sceneId}`);
+            const generateBtn = document.getElementById(`generate-btn-${sceneId}`);
+            const imageContainer = document.getElementById(`image-container-${sceneId}`);
+
+            // Loading başlat
+            spinner.style.display = 'block';
+            generateBtn.setAttribute('data-kt-indicator', 'on');
+            {#generateBtn.style.display = 'none';#}
+
+            // API isteği
+            fetch(`${sendUrl}`, {
+                method: 'POST',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Sayfayı yenile
+                        window.location.reload();
+                    } else {
+                        alert('Error generating image: ' + data.error);
+                        // Hata durumunda buton tekrar görünür
+                        generateBtn.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error generating image. Please try again.');
+                    generateBtn.style.display = 'block';
+                    // Hide loading indication
+                    generateBtn.removeAttribute('data-kt-indicator');
+
+                    // Enable button
+                    generateBtn.disabled = false;
+                })
+                .finally(() => {
+                    spinner.style.display = 'none';
+                });
+        }
+
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tüm görseller için canvas oluşturma
+            {% for scene in scenes %}
+                setupCanvas({{ scene.id }}, "{{ scene.generated_image.url }}");
+            {% endfor %}
+
+            // Filigran uygulama butonları
+            document.querySelectorAll('.apply-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const sceneId = this.getAttribute('data-scene-id');
+                    const codeInput = document.getElementById(`watermark-code-${sceneId}`);
+                    if (codeInput.value.trim() !== '') {
+                        applyWatermark(sceneId);
+                    } else {
+                        alert('Lütfen bir filigran kodu girin');
+                    }
+                });
+            });
+
+            // Görsel kaydetme butonları
+            document.querySelectorAll('.save-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const sceneId = this.getAttribute('data-scene-id');
+                    saveImage(sceneId);
+                });
+            });
+
+            // Kod inputlarının değişikliğini dinleme
+            document.querySelectorAll('.watermark-code').forEach(input => {
+                input.addEventListener('input', function () {
+                    const sceneId = this.getAttribute('data-scene-id');
+                    if (this.value.trim() !== '') {
+                        document.querySelector(`#watermark-preview-${sceneId}`)?.remove();
+                        createDraggableWatermark(sceneId, this.value);
+                    }
+                });
+            });
+        });
+
+        // Canvas görsellerini ve sürüklenebilir filigranları ayarlama
+        const canvasObjects = {};
+
+        function setupCanvas(sceneId, imageUrl) {
+            const canvas = document.getElementById(`canvas-${sceneId}`);
+            const ctx = canvas.getContext('2d');
+
+            canvasObjects[sceneId] = {
+                canvas: canvas,
+                ctx: ctx,
+                image: new Image(),
+                watermarkX: 20,
+                watermarkY: 20,
+                watermarkText: '',
+                isDragging: false
+            };
+
+            // Görseli canvas'a yükleme
+            canvasObjects[sceneId].image.onload = function () {
+                // Canvas boyutlarını görsel oranlarına göre ayarlama
+                const imgRatio = this.width / this.height;
+                canvas.width = 500;
+                canvas.height = canvas.width / imgRatio;
+
+                // Görseli çizme
+                ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+            };
+
+            canvasObjects[sceneId].image.src = imageUrl;
+
+            // Sürükleme işlevselliği için event listener'lar
+            canvas.addEventListener('mousedown', function (e) {
+                handleMouseDown(e, sceneId);
+            });
+
+            canvas.addEventListener('mousemove', function (e) {
+                handleMouseMove(e, sceneId);
+            });
+
+            canvas.addEventListener('mouseup', function () {
+                canvasObjects[sceneId].isDragging = false;
+            });
+
+            canvas.addEventListener('mouseout', function () {
+                canvasObjects[sceneId].isDragging = false;
+            });
+        }
+
+        function createDraggableWatermark(sceneId, code) {
+            const canvasObj = canvasObjects[sceneId];
+            canvasObj.watermarkText = code;
+
+            // Görseli yeniden çiz ve filigranı ekle
+            drawImageWithWatermark(sceneId);
+        }
+
+        function drawImageWithWatermark(sceneId) {
+            const obj = canvasObjects[sceneId];
+            const canvas = obj.canvas;
+            const ctx = obj.ctx;
+            const fontSize = document.getElementById(`font-size-${sceneId}`).value;
+            const isTransparent = document.getElementById(`transparent-${sceneId}`).checked;
+
+            // Canvas'ı temizle
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Görseli yeniden çiz
+            ctx.drawImage(obj.image, 0, 0, canvas.width, canvas.height);
+
+            // Filigranı çiz
+            if (obj.watermarkText) {
+                ctx.font = `${fontSize}px Arial`;
+                ctx.fillStyle = isTransparent ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 1)';
+                ctx.fillText(obj.watermarkText, obj.watermarkX, obj.watermarkY);
+            }
+        }
+
+        function handleMouseDown(e, sceneId) {
+            const obj = canvasObjects[sceneId];
+            const canvas = obj.canvas;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Filigran yoksa işlem yapma
+            if (!obj.watermarkText) return;
+
+            // Tıklama pozisyonunun filigran üzerinde olup olmadığını kontrol et
+            const ctx = obj.ctx;
+            const metrics = ctx.measureText(obj.watermarkText);
+            const fontSize = parseInt(document.getElementById(`font-size-${sceneId}`).value);
+
+            if (
+                x >= obj.watermarkX &&
+                x <= obj.watermarkX + metrics.width &&
+                y >= obj.watermarkY - fontSize &&
+                y <= obj.watermarkY
+            ) {
+                obj.isDragging = true;
+                obj.lastX = x;
+                obj.lastY = y;
+            }
+        }
+
+        function handleMouseMove(e, sceneId) {
+            const obj = canvasObjects[sceneId];
+
+            if (obj.isDragging) {
+                const canvas = obj.canvas;
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Filigran pozisyonunu güncelle
+                obj.watermarkX += (x - obj.lastX);
+                obj.watermarkY += (y - obj.lastY);
+
+                obj.lastX = x;
+                obj.lastY = y;
+
+                // Filigranı yeniden çiz
+                drawImageWithWatermark(sceneId);
+            }
+        }
+
+        function applyWatermark(sceneId) {
+            const codeInput = document.getElementById(`watermark-code-${sceneId}`);
+
+            if (codeInput.value.trim() !== '') {
+                createDraggableWatermark(sceneId, codeInput.value);
+            }
+        }
+
+        function saveImage(sceneId) {
+            const canvas = canvasObjects[sceneId].canvas;
+
+            // Canvas'ı veri URL'sine dönüştür
+            const dataURL = canvas.toDataURL('image/png');
+
+            // Görüntüyü indirmek için bir link oluştur
+            const downloadLink = document.createElement('a');
+            downloadLink.href = dataURL;
+            downloadLink.download = `scene-${sceneId}-watermarked.png`;
+
+            // Linki DOM'a ekle, tıkla ve kaldır
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
+
+{% endblock %}

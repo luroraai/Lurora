@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: wosvcore
+    env: python
+    buildCommand: |
+      apt-get update && apt-get install -y $(cat apt.packages)
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn wosvcore.wsgi:application
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: False
+      - key: ALLOWED_HOSTS
+        value: .onrender.com
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: DJANGO_SETTINGS_MODULE
+        value: wosvcore.settings
+    buildpacks:
+      - name: python
+    healthCheckPath: /
+

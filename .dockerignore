@@ -1,0 +1,27 @@
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+*.pyc
+*.pyo
+*.mo
+*.db
+*.css.map
+*.egg-info
+*.sql.gz
+.cache
+.project
+.pydevproject
+.idea/workspace.xml
+.DS_Store
+.git/
+.gitignore
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+staticfiles/

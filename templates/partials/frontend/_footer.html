@@ -1,0 +1,104 @@
+{% load static mptt_tags %}
+<footer class="footer-area section-two-bg">
+    <div class="footer-widget">
+        <div class="container">
+            <div class="row row-gap-5 justify-content-center">
+                <div class="col-lg-4 col-md-8">
+                    <div class="footer-widget__item text-center text-lg-start">
+                        <a href="/" class="d-block">
+                            <img src="{% get_static_prefix %}common/img/lurora_logo.png" alt="logo">
+                        </a>
+                        <br>
+                        <p>
+                            Lurora is an innovative AI-powered platform that transforms storytelling into an interactive and immersive experience. By leveraging cutting-edge
+                            artificial intelligence, Lurora generates meaningful five-scene stories with unique visuals and hidden encrypted messages. Users can create, explore,
+                            and share stories in a way that challenges their creativity and critical thinking skills.
+                        </p>
+                        <br>
+
+
+                        <ul class="social">
+                            <li>
+                                <a href="https://www.facebook.com/" target="_blank">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.x.com/?lang=en" target="_blank">
+                                    <i class="fa-brands fa-x-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/" target="_blank">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="footer-widget__content ps-xl-5">
+                        <div class="footer-widget__item">
+                            <h4>Company</h4>
+                            <ul class="useful-list">
+                                {% for node in footer_menu|slice:":3" %}
+                                    <li>
+                                        <a class="nav-link" href="{{ node.get_absolute_url }}"><span>{{ node.title }}</span></a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="footer-widget__item">
+                            <h4>Company</h4>
+                            <ul class="useful-list">
+                                {% for node in footer_menu|slice:"3:" %}
+                                    <li>
+                                        <a class="nav-link" href="{{ node.get_absolute_url }}"><span>{{ node.title }}</span></a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="footer-widget__item">
+                            <h4>Share and Discover</h4>
+                            <p>Publish your encrypted story for others to explore. Readers can engage with your narrative, attempt to decode the hidden messages, and immerse
+                                themselves in a dynamic storytelling experience.</p>
+                            <div class="row row-cols-1 gy-3 mt-4">
+                                <a href="{% url 'accounts:login' %}" class="btn btn--border">
+                                    Login
+                                </a>
+                                <a href="{% url 'accounts:register' %}" class="btn btn--base">
+                                    Sign Up
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copy-right">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copy-right__content">
+                        <p class="copy-right__text">
+                            Copyright © 2025 All Rights Reserved By <a href="/">Lurora</a>
+                        </p>
+                        <ul class="nav gap-4 row-gap-2">
+                            <li><a href="">Help Center</a></li>
+                            <li><a href="">Privacy Policy</a></li>
+                            <li><a href="">Terms of Services</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

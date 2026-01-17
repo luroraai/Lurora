@@ -1,0 +1,23 @@
+{% if messages %}
+    <div class="col-lg-12">
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="alert bg-light-danger border border-danger border-dashed d-flex align-items-center p-5 mb-4">
+                    <div class="d-flex flex-column">
+                        <!--begin::Title-->
+                        <h4 class="mb-1 text-danger">{{ message }}</h4>
+                        <!--end::Title-->
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert bg-light-{{ message.tags }} border border-{{ message.tags }} border-dashed d-flex align-items-center p-5 mb-4">
+                    <div class="d-flex flex-column">
+                        <!--begin::Title-->
+                        <h4 class="mb-1 text-{{ message.tags }}">{{ message }}</h4>
+                        <!--end::Title-->
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

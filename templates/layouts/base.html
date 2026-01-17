@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Lurora AI Image Generator HTML Template – Generate stunning AI-powered images instantly with our advanced AI image generator. Perfect for artists, designers,
+          and businesses. Fast, high-quality, and easy to use.">
+    <meta name="keywords" content="AI image generator, image generation, AI art, digital">
+    <!-- Title -->
+    <title>Welcome to Lurora</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% get_static_prefix %}frontend/images/logo/favicon.ico">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% get_static_prefix %}frontend/css/bootstrap.min.css">
+    <!-- Swiper -->
+    <link rel="stylesheet" href="{% get_static_prefix %}frontend/css/swiper-bundle.min.css">
+    <!-- magnific popup -->
+    <link rel="stylesheet" href="{% get_static_prefix %}frontend/css/magnific-popup.min.css">
+    <!-- Odometer -->
+    <link rel="stylesheet" href="{% get_static_prefix %}frontend/css/odometer.css">
+    <!-- Custom Animation -->
+    <link rel="stylesheet" href="{% get_static_prefix %}frontend/css/custom-animation.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% get_static_prefix %}frontend/css/main.css?v=1">
+    <link rel="stylesheet" href="{% get_static_prefix %}frontend/css/custom.css?v=22">
+    {% block extra_css %}
+
+    {% endblock %}
+</head>
+
+<body>
+
+<!-- ===========================
+=====>> Preloader <<======= -->
+<div id="preloader">
+    <div id="text">
+        <p>L</p>
+        <p>u</p>
+        <p>r</p>
+        <p>o</p>
+        <p>r</p>
+        <p>a</p>
+
+    </div>
+</div>
+<!-- =====>> End Preloader <<=====
+=========================== -->
+
+<!-- ===========================
+=====>> Scroll back to top <<===== -->
+<div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+</div>
+<!-- =====>> End Scroll back to top <<=====
+=========================== -->
+<!-- ===========================
+=====>> navbar <<===== -->
+{% block header %}
+    {% include 'partials/frontend/_header.html' %}
+{% endblock %}
+<!-- =====>> End navbar <<=====
+=========================== -->
+<main>
+    {% block content %}
+
+    {% endblock %}
+</main>
+<!-- ===========================
+=====>> footer <<===== -->
+{% block footer %}
+    {% include 'partials/frontend/_footer.html' %}
+{% endblock %}
+<!-- =====>> End footer <<=====
+=========================== -->
+
+
+<!-- Jquery js -->
+
+<script src="{% get_static_prefix %}frontend/js/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap Bundle Js -->
+<script src="{% get_static_prefix %}frontend/js/boostrap.bundle.min.js"></script>
+<!-- gsap js -->
+<script src="{% get_static_prefix %}frontend/js/gsap.min.js"></script>
+<!-- ScrollTrigger js -->
+<script src="{% get_static_prefix %}frontend/js/ScrollTrigger.js"></script>
+<!-- Scroll Reveal js -->
+<script src="{% get_static_prefix %}frontend/js/scrollreveal.min.js"></script>
+<!-- images loaded js -->
+<script src="{% get_static_prefix %}frontend/js/imagesloaded.pkgd.min.js"></script>
+<!-- isotope js -->
+<script src="{% get_static_prefix %}frontend/js/isotope.pkgd.min.js"></script>
+<!-- magnific popup js -->
+<script src="{% get_static_prefix %}frontend/js/jquery.magnific-popup.min.js"></script>
+<!-- swiper js -->
+<script src="{% get_static_prefix %}frontend/js/swiper-bundle.min.js"></script>
+<!-- Odometer js -->
+<script src="{% get_static_prefix %}frontend/js/odometer.min.js"></script>
+<!-- main js -->
+<script src="{% get_static_prefix %}frontend/js/main.js"></script>
+<script src=" https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js "></script>
+{% block extra_js %}
+
+{% endblock %}
+
+</body>
+</html>

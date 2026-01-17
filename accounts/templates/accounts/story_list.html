@@ -1,0 +1,35 @@
+{% extends 'layouts/profile.html' %}
+{% load static %}
+{% block profile_content %}
+    <div class="container">
+        <div class="row mt-60 row-gap-4">
+            {% for story in stories %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="collection-item" style="height: 550px;">
+                        <figure class="image-effect cover-img">
+                            <img src="{{ story.get_image_url }}" alt="collection images"
+                                 class="img-fluid w-100" style="height: 200px;object-fit: cover">
+                        </figure>
+                        <figure class="image-effect prifle-img">
+                            <img src="{% get_static_prefix %}frontend/images/collection/profile5.jpg" alt="collection images"
+                                 class="img-fluid w-100">
+                        </figure>
+                        <div class="collection-title">
+                            <h4><a href="{% url 'accounts:stories:detail' pk=story.id %}">{{ story.title }}</a></h4>
+                            <p>{{ story.scenes.count }} Scenes</p>
+                        </div>
+                        <div class="collection-preview">
+                            {% for get_all_image in story.get_all_images|slice:3 %}
+                                <figure class="image-effect">
+                                    <img src="{{ get_all_image }}" alt="collection images"
+                                         class="img-fluid w-100" style="height: 120px;object-fit: cover">
+                                </figure>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock profile_content %}
+

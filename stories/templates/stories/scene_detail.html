@@ -1,0 +1,27 @@
+{% extends "layouts/dashboard.html" %}
+{% load static %}
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ scene.title }}</h1>
+        <p>Hikaye: {{ scene.story.title }}</p>
+        <p>Durum: {{ scene.story.get_status_display }}</p>
+        {% include 'partials/_messages.html' %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3 class="card-title">Sahne {{ scene.scene_number }}: {{ scene.scene_title }}</h3>
+            </div>
+            <div class="card-body">
+                <p>{{ scene.content|linebreaks }}</p>
+                {% if scene.generated_image %}
+                    <img src="{{ scene.generated_image.url }}" alt="">
+                {% endif %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a href="{% url 'accounts:stories:create_image' pk=scene.id %}" class="btn btn-warning">Görsel Oluştur</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

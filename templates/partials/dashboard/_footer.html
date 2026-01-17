@@ -1,0 +1,31 @@
+{% load static %}
+<div class="footer py-8 d-flex align-items-center bg-light min-h-100px mt-15  bg-gray-300"
+     id="kt_footer">
+    <!--begin::Container-->
+    <div class="container-xxl d-flex flex-column flex-md-row flex-stack align-items-center">
+        <!--begin::Copyright-->
+        <div class="text-dark order-2 order-md-1">
+            <img src="{% static 'common/img/lurora_logo.png' %}" class="h-40px me-3" alt="icon">
+            <span class="text-gray-400 fw-semibold me-1">{% now 'Y' %} © All Rights Reserved </span>
+            <a href="#" target="_blank"
+               class="text-muted text-hover-primary fw-semibold me-2 fs-6">Lurora Story Generation Systems</a>
+        </div>
+        <!--end::Copyright-->
+        <!--begin::Menu-->
+
+        <div class="menu menu-bullet-primary  menu-gray-600 menu-hover-primary fw-semibold order-1 ">
+            <div class="menu-item">
+                <a href="#" target="_blank" class="menu-link px-2">Home</a>
+            </div>
+            <div class="menu-item">
+                <a href="#" target="_blank" class="menu-link px-2">Privacy and Cookie Policy</a>
+            </div>
+            <div class="menu-item">
+                <a href="#" target="_blank" class="menu-link px-2">How to Use?</a>
+            </div>
+
+        </div>
+        <!--end::Menu-->
+    </div>
+    <!--end::Container-->
+</div>

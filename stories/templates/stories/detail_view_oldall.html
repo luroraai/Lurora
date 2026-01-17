@@ -1,0 +1,387 @@
+{% extends "layouts/dashboard.html" %}
+{% load static %}
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ story.title }}</h1>
+        <p>Konu: {{ story.topic }}</p>
+        <p>Durum: {{ story.get_status_display }}</p>
+        {% include 'partials/_messages.html' %}
+        {% for scene in story.scenes.all %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">Sahne {{ scene.scene_number }}: {{ scene.scene_title }}</h3>
+                </div>
+                <div class="card-body">
+                    <p>{{ scene.content|linebreaks }}</p>
+                    <div class="loading-spinner" id="spinner-{{ scene.id }}"></div>
+                    <form method="post" action="{% url 'accounts:stories:scene_update_key' pk=scene.id %}" class="d-inline">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" name="keyword" id="watermarkText-{{ scene.id }}"
+                                   value="{{ scene.keyword|default_if_none:'' }}" placeholder="Sahnenin Anahtar Kelimesi" class="form-control">
+                            <button type="submit" class="btn btn-sm btn-primary">Güncelle</button>
+                        </div>
+                    </form>
+                    <div class="control-group mt-3">
+                        <button id="applyWatermarkBtn-{{ scene.id }}" class="btn btn-sm btn-secondary">Kodu Ekle</button>
+                        <button id="removeWatermarkBtn-{{ scene.id }}" class="btn btn-sm btn-danger">Kodu Kaldır</button>
+                        <button id="rotateLeftBtn-{{ scene.id }}" class="btn btn-sm btn-info">Sola Döndür</button>
+                        <button id="rotateRightBtn-{{ scene.id }}" class="btn btn-sm btn-info">Sağa Döndür</button>
+                        <input type="color" id="textColor-{{ scene.id }}" value="#f1f1f1">
+                        <input type="range" id="textOpacity-{{ scene.id }}" min="0" max="100" value="100">
+                        <input type="number" id="fontSize-{{ scene.id }}" min="8" max="72" value="16">
+                        <button id="saveImageBtn-{{ scene.id }}" class="btn btn-sm btn-success">Kaydet</button>
+                    </div>
+
+                    {% if scene.generated_image %}
+                        <div class="image-container" id="imageContainer-{{ scene.id }}" style="position: relative;">
+                            <img src="{{ scene.generated_image.url }}" id="imagePreview-{{ scene.id }}"
+                                 class="img-fluid my-5" style="width: 100%;" alt="">
+                            <div id="watermark-{{ scene.id }}" class="watermark" style="position: absolute; top: 10px; left: 5px; right: 5px; pointer-events: none;"></div>
+                            <button id="downloadBtn-{{ scene.id }}" class="btn btn-sm btn-primary">İndir</button>
+                        </div>
+                        {#                        <a href="{{ scene.generated_image.url }}" data-fancybox="gallery" data-caption="{{ scene.content }}">#}
+                        {#                            <img src="{{ scene.generated_image.url }}" id="imagePreview"#}
+                        {#                                 class="img-fluid my-5" style="height: 500px" alt="">#}
+                        {#                        </a>#}
+                    {% else %}
+
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <div class="d-grid mb-10">
+                                    <button type="button" onclick="generateImage({{ scene.id }}, '{% url 'accounts:stories:generate_image' scene_id=scene.id %}')"
+                                            id="generate-btn-{{ scene.id }}" class="btn btn-primary">
+                                        <!--begin::Indicator label-->
+                                        <span class="indicator-label">Görsel Oluştur</span>
+                                        <!--end::Indicator label-->
+                                        <!--begin::Indicator progress-->
+                                        <span class="indicator-progress">Please wait...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                        <!--end::Indicator progress-->
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function generateImage(sceneId, sendUrl) {
+            const spinner = document.getElementById(`spinner-${sceneId}`);
+            const generateBtn = document.getElementById(`generate-btn-${sceneId}`);
+            const imageContainer = document.getElementById(`image-container-${sceneId}`);
+
+            // Loading başlat
+            spinner.style.display = 'block';
+            generateBtn.setAttribute('data-kt-indicator', 'on');
+            {#generateBtn.style.display = 'none';#}
+
+            // API isteği
+            fetch(`${sendUrl}`, {
+                method: 'POST',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Sayfayı yenile
+                        window.location.reload();
+                    } else {
+                        alert('Error generating image: ' + data.error);
+                        // Hata durumunda buton tekrar görünür
+                        generateBtn.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error generating image. Please try again.');
+                    generateBtn.style.display = 'block';
+                    // Hide loading indication
+                    generateBtn.removeAttribute('data-kt-indicator');
+
+                    // Enable button
+                    generateBtn.disabled = false;
+                })
+                .finally(() => {
+                    spinner.style.display = 'none';
+                });
+        }
+
+
+    </script>
+
+    <script>
+        function setupWatermark(sceneId) {
+            const imageContainer = document.getElementById(`imageContainer-${sceneId}`);
+            const watermarkElement = document.getElementById(`watermark-${sceneId}`);
+            const watermarkText = document.getElementById(`watermarkText-${sceneId}`);
+            const textColor = document.getElementById(`textColor-${sceneId}`);
+            const textOpacity = document.getElementById(`textOpacity-${sceneId}`);
+            const fontSize = document.getElementById(`fontSize-${sceneId}`);
+            const applyWatermarkBtn = document.getElementById(`applyWatermarkBtn-${sceneId}`);
+            const removeWatermarkBtn = document.getElementById(`removeWatermarkBtn-${sceneId}`);
+
+            applyWatermarkBtn.addEventListener('click', () => addWatermark(sceneId));
+            removeWatermarkBtn.addEventListener('click', () => removeWatermark(sceneId));
+
+            textColor.addEventListener('change', () => updateWatermark(sceneId));
+            textOpacity.addEventListener('input', () => updateWatermark(sceneId));
+            fontSize.addEventListener('input', () => updateWatermark(sceneId));
+
+            function addWatermark(sceneId) {
+                const text = watermarkText.value || 'HQREQ33';
+                watermarkElement.textContent = text;
+                updateWatermarkStyle(watermarkElement);
+                watermarkElement.style.display = 'block';
+                makeDraggable(watermarkElement);
+            }
+
+            function updateWatermark(sceneId) {
+                updateWatermarkStyle(watermarkElement);
+            }
+
+            function updateWatermarkStyle(watermark) {
+                watermark.style.color = textColor.value;
+                watermark.style.opacity = textOpacity.value / 100;
+                watermark.style.fontSize = `${fontSize.value}px`;
+                watermark.style.transform = `rotate(${rotationDegree}deg)`;
+            }
+
+            function removeWatermark(sceneId) {
+                watermarkElement.style.display = 'none';
+                watermarkElement.textContent = '';
+            }
+
+            function makeDraggable(element) {
+                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                element.style.cursor = 'move';
+                element.style.userSelect = 'none';
+                element.style.pointerEvents = 'auto';
+
+                element.onmousedown = dragMouseDown;
+
+                function dragMouseDown(e) {
+                    e.preventDefault();
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    document.onmouseup = closeDragElement;
+                    document.onmousemove = elementDrag;
+                }
+
+                function elementDrag(e) {
+                    e.preventDefault();
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+
+                    const containerRect = imageContainer.getBoundingClientRect();
+                    const elementRect = element.getBoundingClientRect();
+
+                    let newTop = element.offsetTop - pos2;
+                    let newLeft = element.offsetLeft - pos1;
+
+                    newTop = Math.max(0, Math.min(newTop, containerRect.height - elementRect.height));
+                    newLeft = Math.max(0, Math.min(newLeft, containerRect.width - elementRect.width));
+
+                    element.style.top = newTop + "px";
+                    element.style.left = newLeft + "px";
+                }
+
+                function closeDragElement() {
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+            }
+
+            const rotateLeftBtn = document.getElementById(`rotateLeftBtn-${sceneId}`);
+            const rotateRightBtn = document.getElementById(`rotateRightBtn-${sceneId}`);
+            let rotationDegree = 0;
+
+            rotateLeftBtn.addEventListener('click', () => {
+                rotationDegree -= 90;
+                updateWatermarkStyle(watermarkElement);
+            });
+
+            rotateRightBtn.addEventListener('click', () => {
+                rotationDegree += 90;
+                updateWatermarkStyle(watermarkElement);
+            });
+
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            {% for scene in story.scenes.all %}
+                setupWatermark({{ scene.id }});
+                setupImageDownload({{ scene.id }});
+            {% endfor %}
+        });
+
+
+        function setupImageDownload(sceneId) {
+            const downloadBtn = document.getElementById(`downloadBtn-${sceneId}`);
+            const saveImageBtn = document.getElementById(`saveImageBtn-${sceneId}`);
+
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', () => {
+                    downloadWatermarkedImage(sceneId);
+                });
+            }
+
+            if (saveImageBtn) {
+                saveImageBtn.addEventListener('click', () => {
+                    saveWatermarkedImage(sceneId);
+                });
+            }
+        }
+
+        function downloadWatermarkedImage(sceneId) {
+            const imageContainer = document.getElementById(`imageContainer-${sceneId}`);
+            const imagePreview = document.querySelector(`#imageContainer-${sceneId} img`);
+            const watermarkElement = document.getElementById(`watermark-${sceneId}`);
+
+            if (!imagePreview || !watermarkElement) {
+                alert('Görsel veya watermark bulunamadı.');
+                return;
+            }
+
+            // Canvas oluştur
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Canvas boyutunu görsel boyutuna ayarla
+            canvas.width = imagePreview.naturalWidth;
+            canvas.height = imagePreview.naturalHeight;
+
+            // Görseli canvas'a çiz
+            ctx.drawImage(imagePreview, 0, 0, canvas.width, canvas.height);
+
+            // Watermark görünür ise ekle
+            if (watermarkElement.style.display !== 'none' && watermarkElement.textContent) {
+                const watermarkStyle = window.getComputedStyle(watermarkElement);
+
+                // Watermark pozisyonunu hesapla
+                const containerRect = imageContainer.getBoundingClientRect();
+                const watermarkRect = watermarkElement.getBoundingClientRect();
+
+                // Watermark'ın görsel üzerindeki oransal pozisyonunu hesapla
+                const relativeX = (watermarkRect.left - containerRect.left) / containerRect.width;
+                const relativeY = (watermarkRect.top - containerRect.top) / containerRect.height;
+
+                // Canvas üzerindeki pozisyonu hesapla
+                const canvasX = relativeX * canvas.width;
+                const canvasY = relativeY * canvas.height;
+
+                // Font boyutunu orantılı olarak ayarla
+                const fontSizeRatio = canvas.width / containerRect.width;
+                const fontSize = parseInt(watermarkStyle.fontSize) * fontSizeRatio;
+
+                // Watermark stilini ayarla
+                ctx.save();
+                ctx.globalAlpha = parseFloat(watermarkStyle.opacity);
+                ctx.fillStyle = watermarkStyle.color;
+                ctx.font = `${fontSize}px ${watermarkStyle.fontFamily || 'Arial'}`;
+
+                // Rotasyonu ayarla
+                const rotationMatch = watermarkElement.style.transform.match(/rotate\((-?\d+)deg\)/);
+                const rotationDegree = rotationMatch ? parseInt(rotationMatch[1]) : 0;
+
+                ctx.translate(canvasX, canvasY + fontSize / 2); // Y pozisyonunu font boyutuna göre ayarla
+                ctx.rotate(rotationDegree * Math.PI / 180);
+                ctx.fillText(watermarkElement.textContent, 0, 0);
+                ctx.restore();
+            }
+
+            // Canvas'ı PNG olarak indir
+            const link = document.createElement('a');
+            link.download = `watermarked_image_${sceneId}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+
+        function saveWatermarkedImage(sceneId) {
+            const imageContainer = document.getElementById(`imageContainer-${sceneId}`);
+            const imagePreview = document.getElementById(`imagePreview-${sceneId}`);
+            const watermark = document.getElementById(`watermark-${sceneId}`);
+            const watermarkText = document.getElementById(`watermarkText-${sceneId}`).value || '';
+
+            // Canvas oluştur ve görseli çiz
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = imagePreview.naturalWidth;
+            canvas.height = imagePreview.naturalHeight;
+            ctx.drawImage(imagePreview, 0, 0, canvas.width, canvas.height);
+
+            // Watermark'ı ekle
+            if (watermark && watermark.style.display !== 'none' && watermark.textContent) {
+                const computedStyle = window.getComputedStyle(watermark);
+                ctx.font = `${computedStyle.fontSize} Arial`;
+                ctx.fillStyle = computedStyle.color;
+                ctx.globalAlpha = parseFloat(computedStyle.opacity);
+
+                const containerRect = imageContainer.getBoundingClientRect();
+                const watermarkRect = watermark.getBoundingClientRect();
+
+                const x = (watermarkRect.left - containerRect.left) * (canvas.width / containerRect.width);
+                const y = (watermarkRect.top - containerRect.top) * (canvas.height / containerRect.height) + parseInt(computedStyle.fontSize);
+
+                const rotationMatch = watermark.style.transform.match(/rotate\((-?\d+)deg\)/);
+                if (rotationMatch) {
+                    const rotation = parseInt(rotationMatch[1]);
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(rotation * Math.PI / 180);
+                    ctx.fillText(watermark.textContent, 0, 0);
+                    ctx.restore();
+                } else {
+                    ctx.fillText(watermark.textContent, x, y);
+                }
+
+                ctx.globalAlpha = 1.0;
+            }
+
+            // Canvas'ı blob'a dönüştür
+            canvas.toBlob(function (blob) {
+                // FormData oluştur
+                const formData = new FormData();
+                formData.append('image', blob, `scene-${sceneId}-watermarked.png`);
+                formData.append('keyword', watermarkText);
+
+                // CSRF token al
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                // Sunucuya gönder
+                fetch(`/accounts/stories/scene/${sceneId}/save-watermarked/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Görsel başarıyla kaydedildi!');
+                            // İsteğe bağlı: sayfayı yenile
+                            // window.location.reload();
+                        } else {
+                            alert('Görsel kaydedilirken bir hata oluştu: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Görsel kaydedilirken bir hata oluştu.');
+                    });
+            }, 'image/png');
+        }
+
+    </script>
+
+{% endblock %}

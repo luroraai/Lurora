@@ -1,0 +1,575 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- ===========================
+    =====>> Banner <<======= -->
+    <section class="banner-two-section ">
+        <div class="container">
+            <div class="row position-relative justify-content-center ">
+                <div class="col-lg-10">
+                    <div class="banner-content">
+                        <div class="sub-header">Unleash Your Imagination, Decode the Hidden Stories.</div>
+                        <h1><span>Every image hides a story, every story hides a secret!</span></h1>
+                        <p>
+                            With today's technology, art and encryption have reached a whole new level! <br>
+                            Lurora brings together AI-generated stories, stunning visuals that bring
+                            them to life, <br> and hidden messages encoded within, creating an interactive experience of discovery and imagination.
+
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="banner-imgs">
+                        <div class="banner-img-one">
+                            <figure class="image-effect left-reveal">
+                                <img src="{% get_static_prefix %}common/img/scene_22.jpg" alt="banner images" class="img-fluid w-100">
+                            </figure>
+                        </div>
+                        <div class="banner-img-two">
+                            <figure class="image-effect right-reveal">
+                                <img src="{% get_static_prefix %}common/img/scene_23.jpg" alt="banner images" class="img-fluid w-100">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====>> End Banner <<=====
+    =========================== -->
+    <!-- ===========================
+    =====>> About <<======= -->
+    <section class="about-two-section section-two-bg py-120">
+        <div class="container">
+            <div class="row row-gap-4">
+                <div class="col-lg-6 align-self-center">
+                    <div class="about-two-section__img me-xl-4">
+                        <figure class="image-effect right-reveal">
+                            <img src="{% get_static_prefix %}common/img/story1.jpg" style="height: 230px;object-fit: cover;" alt="about images" class="img-fluid w-100">
+                        </figure>
+                        <div class="about-image-content left-reveal">
+                            <div class="about-image-text">
+                                <h2>790+</h2>
+                                <hr>
+                                <p>Our Satisfied Customer For Premium Services</p>
+                            </div>
+                        </div>
+
+                        <div class="about-image-content right-reveal">
+                            <div class="about-image-text">
+                                <h2>100%</h2>
+                                <hr>
+                                <p>Customer Satisfied Rate Premium Services</p>
+                            </div>
+                        </div>
+                        <figure class="image-effect left-reveal">
+                            <img src="{% get_static_prefix %}common/img/story2.jpg" style="height: 230px;object-fit: cover;" alt="about images" class="img-fluid w-100">
+                        </figure>
+                    </div>
+                </div>
+                <div class="col-lg-6 align-self-center">
+                    <div class="about-section__content">
+                        <div class="section-title">
+                            <span class="sub-title right-reveal">About Us</span>
+                            <h2 class="right-reveal">Lurora is an innovative AI-powered platform that transforms storytelling into an interactive and immersive experience.</h2>
+                            <p class="right-reveal">Our mission is to bridge the gap between storytelling and technology, providing an engaging space where users can experiment
+                                with AI-generated narratives and illustrations. Whether you are an aspiring writer, an artist, or simply a curious mind, Lurora offers an
+                                unparalleled platform to bring stories to life in an entirely new way.</p>
+                            <a href="about.html" class="btn btn--base right-reveal">
+                                More About
+                                <i class="flaticon-right-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====>> End About <<=====
+    =========================== -->
+    <!-- ===========================
+    =====>> Feature <<======= -->
+    <section class="feature-two-section py-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-title text-center">
+                        <span class="sub-title top-reveal">How Does the System Work?</span>
+                        <h2 class="top-reveal">Lurora makes storytelling easy and interactive. Follow these three simple steps to create and share your own AI-powered story:</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center row-gap-4 mt-60">
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-section__item top-reveal">
+                        <div class="icon">
+                            <i class="flaticon-photo-editing"></i>
+                        </div>
+                        <div class="text">
+                            <h5>Story Generation</h5>
+                            <p>Generate unique images based on your ideas. Our mission is to then revolutionize the
+                                way.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-section__item top-reveal">
+                        <div class="icon">
+                            <i class="flaticon-image-edit"></i>
+                        </div>
+                        <div class="text">
+                            <h5>AI-Generated Visuals</h5>
+                            <p>Generate unique images based on your ideas. Our mission is to then revolutionize the
+                                way.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-section__item top-reveal">
+                        <div class="icon">
+                            <i class="flaticon-camera"></i>
+                        </div>
+                        <div class="text">
+                            <h5>Embedding Hidden Codes in the Images</h5>
+                            <p>Generate unique images based on your ideas. Our mission is to then revolutionize the
+                                way.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-section__item top-reveal">
+                        <div class="icon">
+                            <i class="flaticon-replace"></i>
+                        </div>
+                        <div class="text">
+                            <h5>User Interaction and Discovery</h5>
+                            <p>Generate unique images based on your ideas. Our mission is to then revolutionize the
+                                way.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====>> End Feature <<=====
+    =========================== -->
+    <!-- ===========================
+    =====>> Full-video <<======= -->
+    <div class="full-video-section bg-img" data-background-image="{% get_static_prefix %}frontend/images/video/magical-eyes-close-up.jpg">
+        <div class="text-center">
+            <a href="https://www.youtube.com/watch?v=TfU0qjuZkJ4" class="video-play-btn popup-youtube" tabindex="0">
+                <i class="fa-solid fa-play"></i>
+            </a>
+        </div>
+    </div>
+    <!-- =====>> End Full-video <<=====
+    =========================== -->
+
+
+    <!-- ===========================
+    =====>> We-are <<======= -->
+    <section class="section-one-bg py-120">
+        <div class="container">
+            <div class="row row-gap-4">
+                <div class="col-lg-6 align-self-end">
+                    <div class="section-title pe-xl-4">
+                        <span class="sub-title right-reveal">Who We Are?</span>
+                        <h2 class="right-reveal">Empowering Creativity with AI Skills</h2>
+
+                        <p class="right-reveal pb-0">we are innovators in AI-driven image generation, transforming
+                            on the
+                            way
+                            people create and interact with digital art. Our advanced the AI technology enables
+                            users
+                            produce stunning visuals effortlessly, making high-quality design accessible to
+                            everyone.
+                            <br>
+                            <br>
+                            Our cutting-edge AI technology seamlessly transforms in the ideas into of breath taking
+                            the
+                            visuals in just a few clicks. Whether you're a digital artist, marketer, business owner,
+                            content
+                            creator.
+                        </p>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 align-self-end">
+                    <div class="d-grid row-gap-4 pb-lg-3">
+                        <div class="skill-progress">
+                            <span class="fs-16">AI-Powered Image Generation</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar">
+                                </div>
+                                <div class="percentage" data-target="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-progress">
+                            <span class="fs-16">Fast & Efficient Processing</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar">
+                                </div>
+                                <div class="percentage" data-target="70"></div>
+                            </div>
+                        </div>
+                        <div class="skill-progress">
+                            <span class="fs-16">Optimized for Marketing & Branding</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar">
+                                </div>
+                                <div class="percentage" data-target="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-progress">
+                            <span class="fs-16">Customizable Design Styles</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar">
+                                </div>
+                                <div class="percentage" data-target="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-progress">
+                            <span class="fs-16">User-Friendly Interface</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar">
+                                </div>
+                                <div class="percentage" data-target="60"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====>> End We-are <<=====
+    =========================== -->
+    <!-- ===========================
+    =====>> Text-slide <<======= -->
+    <div class="section-two-bg py-60 @@services-text-slide">
+        <div class="text-slide swiper">
+            <div class="swiper-wrapper slide-transition">
+                <div class="swiper-slide inner-slide-element">
+                    <div class="slide-text">
+                        LURORA,
+                    </div>
+                </div>
+                <div class="swiper-slide inner-slide-element">
+                    <div class="slide-text">
+                        <img src="{% get_static_prefix %}frontend/images/shape/star.svg" alt="icon">
+                    </div>
+                </div>
+                <div class="swiper-slide inner-slide-element">
+                    <div class="slide-text">
+                        Stories
+                    </div>
+                </div>
+                <div class="swiper-slide inner-slide-element">
+                    <div class="slide-text">
+                        <img src="{% get_static_prefix %}frontend/images/shape/star.svg" alt="icon">
+                    </div>
+                </div>
+                <div class="swiper-slide inner-slide-element">
+                    <div class="slide-text">
+                        Visuals
+                    </div>
+                </div>
+                <div class="swiper-slide inner-slide-element">
+                    <div class="slide-text">
+                        <img src="{% get_static_prefix %}frontend/images/shape/star.svg" alt="icon">
+                    </div>
+                </div>
+                <div class="swiper-slide inner-slide-element">
+                    <div class="slide-text">
+                        Mysteries
+                    </div>
+                </div>
+                <div class="swiper-slide inner-slide-element">
+                    <div class="slide-text">
+                        <img src="{% get_static_prefix %}frontend/images/shape/star.svg" alt="icon">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- =====>> End Text-slide <<=====
+    =========================== -->
+    <!-- ===========================
+
+    =========================== -->
+    <!-- ===========================
+    =====>> Call-to-action <<======= -->
+    <section class="call-to-action-section section-base-bg py-120">
+        <div class="container">
+            <div class="row row-gap-5 justify-content-between">
+                <div class="col-lg-6 col-xl-5 align-self-center">
+                    <div class="section-title">
+                        <span class="sub-title right-reveal">Join Us Now</span>
+                        <h2 class="right-reveal">Unlock Your Creative Potential with Lurora</h2>
+                        <p class="right-reveal">Lurora aims to integrate artificial intelligence with storytelling, creating an innovative space for exploration and creativity.</p>
+                        <a href="{% url 'accounts:login' %}" class="btn btn--black right-reveal">
+                            Sign Up Free
+                            <i class="flaticon-right-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 align-self-center">
+                    <div class="call-to-action-section__img">
+                        <figure class="image-effect right-reveal">
+                            <img src="{% get_static_prefix %}frontend/images/call-to-action/1.jpg" alt="action images"
+                                 class="img-fluid w-100">
+                        </figure>
+                        <figure class="image-effect left-reveal">
+                            <img src="{% get_static_prefix %}frontend/images/call-to-action/2.jpg" alt="action images"
+                                 class="img-fluid w-100">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====>> End Call-to-action <<=====
+    =========================== -->
+    <!-- ===========================
+    =====>> Blog <<======= -->
+    <section class="blog-section section-one-bg py-120">
+        <div class="container">
+            <div class="row row-gap-4 justify-content-center">
+                <div class="col-md-8 align-self-end">
+                    <div class="section-title">
+                        <span class="sub-title right-reveal">Latest Stories</span>
+                        <h2 class="right-reveal">Latest Stories</h2>
+                    </div>
+                </div>
+                <div class="col-md-4 align-self-end">
+                    <div class="text-end pb-2">
+                        <a href="blog-grid.html" class="btn btn--base left-reveal">
+                            View All Stories
+                            <i class="flaticon-right-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-60">
+                <div class="col-lg-12">
+                    <div class="blog-slider swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="blog-grid-item">
+                                    <div class="blog-date">
+                                        <div class="bar-icon"></div>
+                                        August 21, 2025
+                                    </div>
+                                    <a href="blog-details.html">
+                                        <figure class="image-effect">
+                                            <img src="{% get_static_prefix %}frontend/images/blog/1.jpg" alt="blog images"
+                                                 class="img-fluid w-100">
+                                        </figure>
+                                    </a>
+                                    <div class="post-type">
+                                        MODERN
+                                        <div class="bar-icon2"></div>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h4>
+                                            <a href="blog-details.html">Top 5 AI Image Generation Trends to Watch in
+                                                2025</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="blog-grid-item">
+                                    <div class="blog-date">
+                                        <div class="bar-icon"></div>
+                                        October 9, 2025
+                                    </div>
+                                    <a href="blog-details.html">
+                                        <figure class="image-effect">
+                                            <img src="{% get_static_prefix %}frontend/images/blog/2.jpg" alt="blog images"
+                                                 class="img-fluid w-100">
+                                        </figure>
+                                    </a>
+                                    <div class="post-type">
+                                        BUSINESS
+                                        <div class="bar-icon2"></div>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h4>
+                                            <a href="blog-details.html">Step-by-Step Guide to Creating AI-Generated
+                                                Artwork</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="blog-grid-item">
+                                    <div class="blog-date">
+                                        <div class="bar-icon"></div>
+                                        August 21, 2025
+                                    </div>
+                                    <a href="blog-details.html">
+                                        <figure class="image-effect">
+                                            <img src="{% get_static_prefix %}frontend/images/blog/3.jpg" alt="blog images"
+                                                 class="img-fluid w-100">
+                                        </figure>
+                                    </a>
+                                    <div class="post-type">
+                                        CREATIVE
+                                        <div class="bar-icon2"></div>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h4>
+                                            <a href="blog-details.html">How Businesses Can Leverage AI-Generated
+                                                Images</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="blog-grid-item">
+                                    <div class="blog-date">
+                                        <div class="bar-icon"></div>
+                                        August 21, 2025
+                                    </div>
+                                    <a href="blog-details.html">
+                                        <figure class="image-effect">
+                                            <img src="{% get_static_prefix %}frontend/images/blog/1.jpg" alt="blog images"
+                                                 class="img-fluid w-100">
+                                        </figure>
+                                    </a>
+                                    <div class="post-type">
+                                        MODERN
+                                        <div class="bar-icon2"></div>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h4>
+                                            <a href="blog-details.html">Top 5 AI Image Generation Trends to Watch in
+                                                2025</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="blog-grid-item">
+                                    <div class="blog-date">
+                                        <div class="bar-icon"></div>
+                                        October 9, 2025
+                                    </div>
+                                    <a href="blog-details.html">
+                                        <figure class="image-effect">
+                                            <img src="{% get_static_prefix %}frontend/images/blog/2.jpg" alt="blog images"
+                                                 class="img-fluid w-100">
+                                        </figure>
+                                    </a>
+                                    <div class="post-type">
+                                        BUSINESS
+                                        <div class="bar-icon2"></div>
+                                    </div>
+                                    <div class="blog-content">
+                                        <h4>
+                                            <a href="blog-details.html">Step-by-Step Guide to Creating AI-Generated
+                                                Artwork</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====>> End Blog <<=====
+    =========================== -->
+    <!-- ===========================
+    =====>> Follow <<======= -->
+    <div class="follow-slide swiper pb-120">
+        <div class="swiper-wrapper slide-transition">
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/1.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/2.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/3.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/4.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/5.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/6.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/1.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/2.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/3.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide inner-slide-element">
+                <div class="follow-item">
+                    <img src="{% get_static_prefix %}frontend/images/follow/4.jpg" alt="follow img">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =====>> End Follow <<=====
+    =========================== -->
+{% endblock %}

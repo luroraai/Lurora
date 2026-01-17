@@ -1,0 +1,9 @@
+{% load static crispy_forms_field %}
+
+
+<div class="form-check form-check-custom form-check-solid">
+    {% crispy_field field 'class' 'form-check-input' %}
+    <label class="form-check-label" for="{{ field.id_for_label }}">
+        {{ field.label }}
+    </label>
+</div>

@@ -1,0 +1,26 @@
+{% load static %}
+{% if item %}
+    <section class="breadcrumb" style="background-image:url('{% get_static_prefix %}common/img/banner2.webp')">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="breadcrumb__wrapper">
+                        <h2 class="breadcrumb__title"> {{ item.title }}</h2>
+                        <ul class="breadcrumb__list">
+                            {% for breadcrumb in breadcrumbs %}
+                                <li class="breadcrumb__item"><a href="{{ breadcrumb.url }}"
+                                >{{ breadcrumb.title }}</a></li>
+                                {% if not forloop.last %}
+                                    <li class="breadcrumb__item">
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %} 

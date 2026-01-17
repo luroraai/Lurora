@@ -1,0 +1,54 @@
+{% extends 'layouts/profile.html' %}
+{% load static crispy_forms_filters crispy_forms_tags %}
+{% block profile_content %}
+  
+    <div class="container">
+        <div class="row mt-60 row-gap-4 justify-content-center">
+            <div class="form-section">
+                {% include 'partials/_messages.html' %}
+                <form novalidate="novalidate" method="post" action="" id="storyForm">
+                    {% csrf_token %}
+                    {% crispy form %}
+
+                    <div class="submit-button">
+                        <button type="submit" id="submitBtn" class="btn btn--base">
+                            <span class="button-text">Save</span>
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            <i class="flaticon-right-arrow"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const form = document.getElementById('storyForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const buttonText = submitBtn.querySelector('.button-text');
+            const spinner = submitBtn.querySelector('.spinner-border');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                $.LoadingOverlay("show");
+                // Disable the button and show spinner
+                submitBtn.disabled = true;
+                buttonText.textContent = 'Generating...';
+                spinner.classList.remove('d-none');
+
+                // Submit the form
+                this.submit();
+                $.LoadingOverlay("hide");
+            });
+
+        });
+    </script>
+{% endblock %}

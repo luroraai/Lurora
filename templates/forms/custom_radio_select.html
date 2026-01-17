@@ -1,0 +1,38 @@
+{% load crispy_forms_field %}
+
+<div class="mb-5">
+    <label class="form-label">
+        {{ field.label }}
+        {% if field.field.required %}
+            <span>*</span>
+        {% endif %}
+    </label>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 justify-content-around g-4">
+        {% for choice in field.field.choices %}
+            <div class="col">
+                <label class="btn w-100 btn-outline btn--border d-flex text-start px-5 py-4 {% if field.value == choice.0 %}active{% endif %}"
+                       for="id_{{ field.html_name }}_{{ forloop.counter0 }}" data-kt-button="true">
+                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                        <input type="radio" class="form-check-input" name="{{ field.html_name }}"
+                               id="id_{{ field.html_name }}_{{ forloop.counter0 }}" value="{{ choice.0 }}"
+                               {% if field.value == choice.0 %}checked{% endif %}
+                               {% if field.field.required %}required{% endif %}>
+                    </span>
+                    <span class="ms-2">
+                        <span class="fs-4 fw-bold text-light d-block">{{ choice.1 }}</span>
+                    </span>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    {% if field.errors %}
+        <div class="invalid-feedback d-block">
+            {% for error in field.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if field.help_text %}
+        <div class="form-text text-muted">{{ field.help_text|safe }}</div>
+    {% endif %}
+</div>

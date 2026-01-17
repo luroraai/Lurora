@@ -1,0 +1,6 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="#set (&amp;#36;author = &quot;Wosvo Interactive&quot;)&#10;#set (&amp;#36;dev = &quot;Fürkan Göktaş&quot;)&#10;#set (&amp;#36;author_mail = &quot;furkan@wosvo.com&quot;)&#10;#set (&amp;#36;message = &quot;Copyright (c) &amp;#36;today.year&quot;)&#10;Author : &amp;#36;author&#10;Developer : &amp;#36;dev&#10;Email : &amp;#36;author_mail&#10;Date : &amp;#36;today&#10;Filename : &amp;#36;file.fileName&#10;Last Modified : &amp;#36;file.lastModified&#10;Project : &amp;#36;project.name&#10;Module : &amp;#36;module.name&#10;&#10;&amp;#36;message" />
+    <option name="myName" value="WosvoCopyright" />
+  </copyright>
+</component>

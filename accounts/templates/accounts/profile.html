@@ -1,0 +1,25 @@
+{% extends 'layouts/profile.html' %}
+{% load static crispy_forms_filters crispy_forms_tags %}
+{% block profile_content %}
+    <div class="container">
+        <div class="row mt-60 row-gap-4 justify-content-center">
+            <div class="form-section">
+                {% include 'partials/_messages.html' %}
+                <form novalidate="novalidate" method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+
+                    <div class="submit-button">
+                        <button type="submit" class="btn btn--base">
+                            Save
+                            <i class="flaticon-right-arrow"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

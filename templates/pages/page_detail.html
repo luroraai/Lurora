@@ -1,0 +1,60 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block content %}
+    <!-- ===========================
+       =====>> breadcrumb <<======= -->
+    {% include 'partials/frontend/_page_header.html' with item=page %}
+    <!-- =====>> End breadcrumb <<=====
+    =============================== -->
+    <!-- ===========================
+    =====>> About <<======= -->
+    <section class="about-section section-two-bg py-120">
+        <div class="container">
+            <div class="row row-gap-4">
+                <div class="col-lg-6 align-self-center">
+                    <div class="about-section__img">
+                        <div class="image-one">
+                            <figure class="image-effect right-reveal">
+                                <img src="{% get_static_prefix %}frontend/images/about/1.jpg" alt="about images" class="img-fluid w-100">
+                            </figure>
+                        </div>
+                        <div class="image-two d-grid">
+                            <figure class="image-effect bottom-reveal">
+                                <img src="{% get_static_prefix %}frontend/images/about/2.jpg" alt="about images" class="img-fluid w-100">
+                            </figure>
+                            <figure class="image-effect top-reveal">
+                                <img src="{% get_static_prefix %}frontend/images/about/3.jpg" alt="about images" class="img-fluid w-100">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 align-self-center">
+                    <div class="about-section__content">
+                        <div class="section-title">
+                            <span class="sub-title right-reveal">About Us</span>
+                            <h2 class="right-reveal">Welcome to Imagiax where creativity meets artificial
+                                intelligence.</h2>
+                            <p class="right-reveal">Our mission is to revolutionize the way you create visuals by
+                                harnessing
+                                the power of AI to
+                                generate stunning, high-quality images. Whether you're an artist, designer, or the
+                                business
+                                professional, our platform empowers you to bring.
+                                <br>
+                                <br>
+                                the way you create visuals by harnessing the power of AI to generate stunning,
+                                high-quality
+                                images. Whether you're an artist, designer, or the business professional, our
+                                platform
+                                empowers you to bring.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =====>> End About <<=====
+    =========================== -->
+{% endblock content %}
+
