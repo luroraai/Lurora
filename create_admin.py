@@ -9,12 +9,27 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Admin kullanıcı bilgileri
-username = 'admin'
 email = 'admin@lurora.com'
 password = 'Lurora2024!'
 
-if not User.objects.filter(username=username).exists():
-    User.objects.create_superuser(username=username, email=email, password=password)
-    print(f'Superuser {username} created successfully!')
-else:
-    print(f'Superuser {username} already exists.')
+# Mevcut admin varsa sil
+User.objects.filter(email=email).delete()
+
+# Yeni superuser oluştur
+try:
+    user = User.objects.create_superuser(
+        email=email,
+        password=password
+    )
+    print(f'Superuser {email} created successfully!')
+except Exception as e:
+    # Eğer username gerekiyorsa
+    try:
+        user = User.objects.create_superuser(
+            username='admin',
+            email=email,
+            password=password
+        )
+        print(f'Superuser {email} created successfully with username!')
+    except Exception as e2:
+        print(f'Error creating superuser: {e2}')
