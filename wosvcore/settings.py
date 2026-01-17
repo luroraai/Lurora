@@ -187,19 +187,12 @@ SILENCED_SYSTEM_CHECKS = ["security.W019"]
 from django.urls import reverse_lazy
 
 UNFOLD = {
-    "SITE_TITLE": "Wos360 Business",
-    "SITE_HEADER": "Wos360 Business Core",
+    "SITE_TITLE": "Lurora",
+    "SITE_HEADER": "Lurora Admin",
     "SITE_URL": "/",
-    # "SITE_ICON": lambda request: static("icon.svg"),  # both modes, optimise for 32px height
-    "SITE_ICON": {
-        "light": lambda request: static("common/img/wosvo-logo-dark.svg"),  # light mode
-        "dark": lambda request: static("common/img/wosvo-logo-light.svg"),  # dark mode
-    },
-    # "SITE_LOGO": lambda request: static("logo.svg"),  # both modes, optimise for 32px height
-    "SITE_LOGO": {
-        "light": lambda request: static("common/img/wosvo-logo-dark.svg"),  # light mode
-        "dark": lambda request: static("common/img/wosvo-logo-light.svg"),  # dark mode
-    },
+    "SITE_ICON": None,
+    "SITE_LOGO": None,
+```
     "SITE_SYMBOL": "speed",  # symbol from icon set
 
     "SHOW_HISTORY": True,  # show/hide "History" button, default: True
