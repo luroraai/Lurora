@@ -14,11 +14,11 @@ COPY . .
 # Statik dosyaları topla
 RUN python manage.py collectstatic --noinput
 
-# Admin kullanıcı oluştur
-RUN python create_admin.py
+# start.sh'a çalıştırma izni ver
+RUN chmod +x start.sh
 
 # Uygulama portunu belirt
 EXPOSE 8000
 
-# Gunicorn ile uygulamayı çalıştır
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "wosvcore.wsgi:application"]
+# Uygulama başlatma scripti ile çalıştır
+CMD ["./start.sh"]
