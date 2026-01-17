@@ -14,6 +14,9 @@ COPY . .
 # Statik dosyaları topla
 RUN python manage.py collectstatic --noinput
 
+# Admin kullanıcı oluştur
+RUN python create_admin.py
+
 # Uygulama portunu belirt
 EXPOSE 8000
 
