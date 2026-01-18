@@ -20,6 +20,10 @@ from django.views.decorators.http import require_POST
 import base64
 import uuid
 import re
+import logging
+
+# Logger oluştur
+logger = logging.getLogger(__name__)
 
 
 class StoryListView(LoginRequiredMixin, SingleTableView):
@@ -46,15 +50,34 @@ class StoryCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         form.instance.status = 'in_progress'
         story = form.save()
-        service = StoryGenerator()
-        generated_content = service.generate_story(topic=story.topic, scene_count=story.scene_count)
-        if generated_content:
-            story.content = generated_content
-            story.status = 'completed'
-            story.save()
-            messages.success(self.request, 'Story content has been generated successfully.')
-        else:
-            messages.error(self.request, 'Story content generation failed.')
+        
+        try:
+            logger.info(f"Creating StoryGenerator for story: {story.id}")
+            print(f"[DEBUG] Creating StoryGenerator for story: {story.id}")
+            
+            service = StoryGenerator()
+            logger.info(f"Generating story content for topic: {story.topic}")
+            print(f"[DEBUG] Generating story content for topic: {story.topic}")
+            
+            generated_content = service.generate_story(topic=story.topic, scene_count=story.scene_count)
+            
+            logger.info(f"Generated content: {generated_content[:100] if generated_content else 'None'}")
+            print(f"[DEBUG] Generated content: {generated_content[:100] if generated_content else 'None'}")
+            
+            if generated_content:
+                story.content = generated_content
+                story.status = 'completed'
+                story.save()
+                messages.success(self.request, 'Story content has been generated successfully.')
+            else:
+                logger.error("Story generation returned None")
+                print("[DEBUG] Story generation returned None")
+                messages.error(self.request, 'Story content generation failed.')
+        except Exception as e:
+            logger.error(f"Error in StoryCreateView: {str(e)}", exc_info=True)
+            print(f"[DEBUG] Error in StoryCreateView: {str(e)}")
+            messages.error(self.request, f'Story content generation failed: {str(e)}')
+        
         return redirect('accounts:stories:detail', pk=story.pk)
 
 
@@ -93,8 +116,19 @@ def generate_story(request, story_id):
     if request.method == 'POST':
         try:
             story = get_object_or_404(Stories, pk=story_id)
+            
+            logger.info(f"[generate_story] Starting for story_id: {story_id}")
+            print(f"[DEBUG] [generate_story] Starting for story_id: {story_id}")
+            
             service = StoryGenerator()
+            
+            logger.info(f"[generate_story] Calling generate_story with topic: {story.topic}")
+            print(f"[DEBUG] [generate_story] Calling generate_story with topic: {story.topic}")
+            
             generated_content = service.generate_story(topic=story.topic, scene_count=story.scene_count)
+
+            logger.info(f"[generate_story] Result: {generated_content[:100] if generated_content else 'None'}")
+            print(f"[DEBUG] [generate_story] Result: {generated_content[:100] if generated_content else 'None'}")
 
             if generated_content:
                 story.content = generated_content
@@ -102,9 +136,13 @@ def generate_story(request, story_id):
                 story.save()
                 messages.success(request, 'Story content has been generated successfully.')
             else:
+                logger.error("[generate_story] Generation returned None")
+                print("[DEBUG] [generate_story] Generation returned None")
                 messages.error(request, 'Story content generation failed.')
 
         except Exception as e:
+            logger.error(f"[generate_story] Exception: {str(e)}", exc_info=True)
+            print(f"[DEBUG] [generate_story] Exception: {str(e)}")
             messages.error(request, f'Error generating story: {str(e)}')
     return redirect('accounts:stories:detail', pk=story_id)
 
