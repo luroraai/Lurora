@@ -21,23 +21,44 @@ from django.utils.timezone import now
 from stories.models import Stories, Scenes
 import re
 
+logger = logging.getLogger(__name__)
+
 
 class StoryGenerator:
     def __init__(self):
-        genai.configure(api_key=settings.GEMINI_API_KEY)
+        api_key = settings.GEMINI_API_KEY
+        print(f"[DEBUG] GEMINI_API_KEY exists: {bool(api_key)}")
+        print(f"[DEBUG] GEMINI_API_KEY length: {len(api_key) if api_key else 0}")
+        print(f"[DEBUG] GEMINI_API_KEY first 10 chars: {api_key[:10] if api_key and len(api_key) > 10 else 'N/A'}")
+        
+        if not api_key:
+            print("[DEBUG] ERROR: GEMINI_API_KEY is empty!")
+            logger.error("GEMINI_API_KEY is empty!")
+        
+        genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel('gemini-2.0-flash')
 
     def generate_story(self, topic, scene_count):
         try:
+            print(f"[DEBUG] generate_story called with topic: {topic}, scene_count: {scene_count}")
             prompt = self._create_story_prompt(topic=topic, scene_count=scene_count)
+            print(f"[DEBUG] Prompt created, length: {len(prompt)}")
 
+            print("[DEBUG] Calling Gemini API...")
             response = self.model.generate_content(prompt)
+            print(f"[DEBUG] Gemini API response received")
+            print(f"[DEBUG] Response type: {type(response)}")
+            
             story_text = response.text
+            print(f"[DEBUG] Story text length: {len(story_text) if story_text else 0}")
+            print(f"[DEBUG] Story text preview: {story_text[:200] if story_text else 'None'}")
 
             return story_text
 
         except Exception as e:
-            print(f"Error generating story: {e}")
+            print(f"[DEBUG] Error generating story: {str(e)}")
+            print(f"[DEBUG] Error type: {type(e).__name__}")
+            logger.error(f"Error generating story: {e}", exc_info=True)
             return None
 
     def _create_story_prompt(self, topic: str, scene_count: int) -> str:
@@ -122,10 +143,19 @@ class StoryGenerator:
 
 class DallEGenerator:
     def __init__(self):
-        self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
+        api_key = settings.OPENAI_API_KEY
+        print(f"[DEBUG] OPENAI_API_KEY exists: {bool(api_key)}")
+        print(f"[DEBUG] OPENAI_API_KEY length: {len(api_key) if api_key else 0}")
+        
+        if not api_key:
+            print("[DEBUG] ERROR: OPENAI_API_KEY is empty!")
+            logger.error("OPENAI_API_KEY is empty!")
+        
+        self.client = OpenAI(api_key=api_key)
 
     def generate_image(self, prompt):
         try:
+            print(f"[DEBUG] generate_image called with prompt length: {len(prompt)}")
             response = self.client.images.generate(
                 model="dall-e-3",
                 prompt=prompt,
@@ -134,10 +164,12 @@ class DallEGenerator:
                 n=1,
             )
             image_url = response.data[0].url
+            print(f"[DEBUG] Image generated successfully: {image_url[:50]}...")
             return image_url
 
         except Exception as e:
-            print(f"Error generating image: {e}")
+            print(f"[DEBUG] Error generating image: {str(e)}")
+            logger.error(f"Error generating image: {e}", exc_info=True)
             return None
 
 
