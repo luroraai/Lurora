@@ -22,7 +22,7 @@ django-tables2==2.7.5
 django-tinymce==4.1.0
 django-unfold==0.55.1
 django-utils2==3.0.2
-google-generativeai>=0.8.0
+google-generativeai==0.8.5
 gunicorn==23.0.0
 h11==0.14.0
 httpcore==1.0.7
