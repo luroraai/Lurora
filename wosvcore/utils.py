@@ -36,7 +36,7 @@ class StoryGenerator:
             logger.error("GEMINI_API_KEY is empty!")
         
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
 
     def generate_story(self, topic, scene_count):
         try:
